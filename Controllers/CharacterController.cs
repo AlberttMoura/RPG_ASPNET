@@ -6,28 +6,29 @@ namespace RPG.Controllers
     [Route("api/characters")]
     public class CharacterController : ControllerBase
     {
-        private static List<Character> characters = new List<Character>{
-            new Character{Id = 0, Name = "Joao", Class = RpgClass.Mage},
-            new Character{ Id = 1, Name = "James"}
-        };
+        private readonly ICharacterService _characterService;
+
+        public CharacterController(ICharacterService characterService)
+        {
+            _characterService = characterService;
+        }
 
         [HttpGet]
         public ActionResult<List<Character>> GetAll()
         {
-            return Ok(characters);
+            return Ok(_characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
         public ActionResult<Character> GetById(int id)
         {
-            return Ok(characters.FirstOrDefault(c => c.Id == id));
+            return Ok(_characterService.GetCharacterById(id));
         }
 
         [HttpPost]
         public ActionResult<List<Character>> AddCharacter(Character newCharacter)
         {
-            characters.Add(newCharacter);
-            return Ok(characters);
+            return Ok(_characterService.AddCharacter(newCharacter));
         }
     }
 }
