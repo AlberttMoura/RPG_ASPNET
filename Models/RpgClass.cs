@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace RPG.Models
 {
     public enum RpgClass
