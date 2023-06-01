@@ -6,6 +6,7 @@ namespace RPG
         {
             CreateMap<Character, OutputCharacterDTO>();
             CreateMap<InputCharacterDTO, Character>();
+            CreateMap<UpdateCharacterDTO, Character>();
         }
     }
 }

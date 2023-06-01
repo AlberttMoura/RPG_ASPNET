@@ -39,5 +39,27 @@ namespace RPG.Services.CharacterService
             serviceResponse.Data = _mapper.Map<OutputCharacterDTO>(character);
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<OutputCharacterDTO>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        {
+            var serviceResponse = new ServiceResponse<OutputCharacterDTO>();
+            try
+            {
+                var character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+                if (character is null)
+                {
+                    throw new Exception($"Character with Id {updatedCharacter.Id} not found!");
+                }
+                _mapper.Map(updatedCharacter, character);
+
+                serviceResponse.Data = _mapper.Map<OutputCharacterDTO>(character);
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
     }
 }
