@@ -2,10 +2,16 @@ global using RPG.Models;
 global using RPG.Services.CharacterService;
 global using RPG.Dtos.Character;
 global using AutoMapper;
+global using Microsoft.EntityFrameworkCore;
+global using RPG.Data;
+global using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
